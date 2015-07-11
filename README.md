@@ -1,2 +1,2 @@
 # free-account
-free account sharing
+free account （mainly xunlei） sharing
