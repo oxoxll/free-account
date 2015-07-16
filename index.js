@@ -15,7 +15,48 @@ router.use('/user/:id', function(req, res, next) {
     next();
 });
 
+app.get('/refresh_accounts', function (req, res, next) {
+  superagent
+    .get('http://xlfans.com/')
+    .end(function (err, resHome) {
+      if (err) {
+        return next(err);
+      }
+      var $ = cheerio.load(resHome.text);
+      var latestElement = $('article').eq(0).children('header').children('h2').children('a');
+      var title = latestElement.attr('title');
+      var nextURL = latestElement.attr('href');
+      console.log(nextURL);
+      superagent
+        .get(nextURL)
+        .end(function (err, resContent) {
+          if (err) {
+            return next(err)
+          }
+          console.log('success get HTML Content');
+          var $ = cheerio.load(resContent.text);
+          var article = $('.article-content');
+          var p = article.children('p').filter(function (i, el) {
+            //console.log($(this).text().length);
+            return $(this).text().length > 150;
+          });
 
+          var accounts = [];
+          var r = /迅雷粉迅雷会员账号([a-z0-9]+:[1-2]+)密码([0-9]+)\s/g;
+          var s = p.text();
+          while (true) {
+            var match = r.exec(s);
+            if (!match) break;
+            accounts.push({
+              account: match[1],
+              password: match[2]
+            });
+          }
+          console.log(accounts);
+          res.send(accounts);
+        });
+    })
+});
 
 router.route('/account/:page')
     .get(function (req, res, next) {
