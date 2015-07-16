@@ -1,2 +1,2 @@
 # free-account
-free account sharing
+free account sharing, mainly thunder account.
