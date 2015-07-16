@@ -1,0 +1,24 @@
+{
+  "name": "free-account",
+  "main": "index.js",
+  "version": "0.0.2",
+  "homepage": "https://github.com/HisUncle/free-account",
+  "authors": [
+    "heziqiang99"
+  ],
+  "description": "free account",
+  "keywords": [
+    "account"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}
